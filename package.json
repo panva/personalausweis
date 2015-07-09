@@ -1,0 +1,31 @@
+{
+  "name": "personalausweis",
+  "version": "1.0.0",
+  "description": "German ID Card Validation",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "make test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/panva/personalausweis.git"
+  },
+  "keywords": [
+    "personalausweis",
+    "validation",
+    "personal",
+    "id"
+  ],
+  "author": "Filip Skokan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/panva/personalausweis/issues"
+  },
+  "homepage": "https://github.com/panva/personalausweis",
+  "devDependencies": {
+    "mocha": "^2.2.5"
+  }
+}
