@@ -45,7 +45,7 @@ describe('old-format ausweisnummer', function () {
             assert.throws(function () {
                 // 13th month
                 new Ausweisnummer('1220001297D641312517103198');
-            }, /birthdate is invalid/);
+            }, /birthdate has invalid format/);
         });
 
         it('should detect wrong birthdate check digit', function () {
@@ -59,7 +59,7 @@ describe('old-format ausweisnummer', function () {
             assert.throws(function () {
                 // 32 days in a month
                 new Ausweisnummer('1220001297D640812517103298');
-            }, /expiry is invalid/);
+            }, /expiry has invalid format/);
         });
 
         it('should detect wrong expiry date check digit', function () {
@@ -109,7 +109,7 @@ describe('new-format ausweisnummer', function () {
             assert.throws(function () {
                 // A not allowed in number part
                 new Ausweisnummer('A22000129364081252010315D4');
-            }, /number is invalid/);
+            }, /number has invalid format/);
         });
 
         it('should detect wrong number check digit', function () {
@@ -122,7 +122,7 @@ describe('new-format ausweisnummer', function () {
         it('should detect invalid birthdate part format', function () {
             assert.throws(function () {
                 new Ausweisnummer('T22000129364131252010315D4');
-            }, /birthdate is invalid/);
+            }, /birthdate has invalid format/);
         });
 
         it('should detect wrong birthdate check digit', function () {
@@ -135,7 +135,7 @@ describe('new-format ausweisnummer', function () {
         it('should detect invalid expiry date part format', function () {
             assert.throws(function () {
                 new Ausweisnummer('T22000129364081252010325D4');
-            }, /expiry is invalid/);
+            }, /expiry has invalid format/);
         });
 
         it('should detect wrong expiry date check digit', function () {
