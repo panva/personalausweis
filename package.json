@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/panva/personalausweis",
   "devDependencies": {
-    "mocha": "^2.2.5"
+    "mocha": "~2.2.5",
+    "sinon": "~1.15.4"
   }
 }

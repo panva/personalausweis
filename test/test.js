@@ -2,7 +2,8 @@
 
 var assert = require('assert'),
     Ausweisnummer = require('../'),
-    AssertionError = assert.AssertionError;
+    AssertionError = assert.AssertionError,
+    sinon = require('sinon');
 
 var old_valid = '1220001297D640812517103198';
 
@@ -29,6 +30,11 @@ describe('old-format ausweisnummer', function () {
             assert.equal(9, an.expiry_cd);
 
             assert.equal(8, an.full_cd);
+        });
+
+        it('should return the birthdate as an instance of Date', function() {
+            var an = new Ausweisnummer(old_valid);
+            assert.equal('1964-08-12T00:00:00.000Z', an.getBirthdate().toISOString());
         });
     });
 
@@ -102,6 +108,11 @@ describe('new-format ausweisnummer', function () {
 
             assert.equal(4, an.full_cd);
         });
+
+        it('should return the birthdate as an instance of Date', function() {
+            var an = new Ausweisnummer(new_valid);
+            assert.equal('1964-08-12T00:00:00.000Z', an.getBirthdate().toISOString());
+        });
     });
 
     describe('invalid', function () {
@@ -165,5 +176,35 @@ describe('wrong format', function () {
         assert.throws(function () {
             new Ausweisnummer('T22000D1293640812520103150');
         }, /unrecognized id format/);
+    });
+});
+
+describe('Ausweisnummer#getBirthdate', function() {
+    assert.correctBirtdate = function(value, expected) {
+        var getBirthdate = Ausweisnummer.prototype.getBirthdate;
+        var result = getBirthdate.call({
+            birthdate: value
+        });
+        assert.equal(result.toISOString(), expected);
+    }
+
+    var clock;
+
+    before(function() {
+        clock = sinon.useFakeTimers(new Date(2015, 6, 0).getTime(), 'Date');
+    });
+
+    after(function() {
+        clock.restore();
+    });
+
+    it('should correctly guess the century', function() {
+        assert.correctBirtdate('010505', '2001-05-05T00:00:00.000Z');
+        assert.correctBirtdate('050506', '2005-05-06T00:00:00.000Z');
+        assert.correctBirtdate('150507', '2015-05-07T00:00:00.000Z');
+
+        assert.correctBirtdate('160505', '1916-05-05T00:00:00.000Z');
+        assert.correctBirtdate('640812', '1964-08-12T00:00:00.000Z');
+        assert.correctBirtdate('990812', '1999-08-12T00:00:00.000Z');
     });
 });
